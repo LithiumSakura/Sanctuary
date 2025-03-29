@@ -1,3 +1,6 @@
+import java.io.IOException;
+import java.util.Scanner;
+
 public class Sanctuary
 {
     // ANSI color codes
@@ -29,6 +32,7 @@ public class Sanctuary
         // Initialise the game
         String command = "";
         int room = 1;
+        Scanner sc = new Scanner(System.in);
 
         String[][] map = {
             {"X"," "," "," "," "," "},
@@ -41,31 +45,61 @@ public class Sanctuary
 
         String[] backpack = {" "," ", };
 
-
         // Introduction
-        System.out.println();
+        System.out.println("\n(Press ENTER to continue or ESC to quit...)");
+        waitForSE();
         System.out.println(YELLOW + "You wake up in a dystopian world, the radio is crackling as a transmission comes through." + RESET);
+        waitForSE();
         System.out.println("'If anyone is out there.. there is a Sanctuary for you at grid location F4. Over.'");
+        waitForSE();
         System.out.println(RED + ITALICS + "You open your map and mark where the Sanctuary is." + ITALICS + RESET);
+        waitForSE();
         printMap(map);
-
+        waitForSE();
         System.out.println(RED + ITALICS + "'I guess I should pack my bag..'" + ITALICS + RESET);
+        
+        while(true) {
+            if(room == 1) {
+                System.out.println("Directions you can go in:");
+                System.out.println(backpack[0]);
+            }
 
+            System.out.print("> ");
+            command = sc.nextLine();
 
+            if(room == 1) {
+                if(command.equals(" ")) {
+                    System.out.println(" ");
+                }
+            }
+        }
+        
+        
+        
+        waitForSE();
+    }
 
-
-
-
-
-        System.out.println(PURPLE + "\nPress Enter to exit..." + RESET);
+    public static void waitForSE() {
         try {
-            System.in.read();
-        } catch (Exception e) {}
+            int input;
+            while (true) {
+                input = System.in.read();
+                if (input == 10) {
+                    break;
+                } 
+                else if (input == 81 || input == 113) {
+                    System.out.println(RED + "\nExiting game..." + RESET);
+                    System.exit(0);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void printMap(String[][] map)
     {
-        System.out.println("\n-----------------------------------------------------------------------------------------------------------------");
+        System.out.println("-----------------------------------------------------------------------------------------------------------------");
         System.out.print("|\tMap\t|");
         for (int i = 0; i < map[0].length; i++) {
             char columnLabel = (char)('A' + i);
@@ -88,7 +122,6 @@ public class Sanctuary
                 }
             }
         }
-        System.out.println("\n-----------------------------------------------------------------------------------------------------------------");
-        System.out.println(RESET);
+        System.out.println("\n-----------------------------------------------------------------------------------------------------------------" + RESET);
     }
 }
